@@ -1,0 +1,17 @@
+@model Car
+@{
+    ViewData["Title"] = $"Remove: {Model.Make} {Model.Model}";
+}
+
+<h1>Remove this Car? 🗑️</h1>
+<p class="text-muted">This takes it off the list for good. There is no undo.</p>
+
+<div class="col-md-4 mb-4">
+    <partial name="_CarCard" model="Model" />
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Remove it</button>
+    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-link">Keep it</a>
+</form>

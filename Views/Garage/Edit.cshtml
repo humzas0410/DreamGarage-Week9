@@ -1,0 +1,91 @@
+@model Car
+@{
+    ViewData["Title"] = $"Edit {Model.Make} {Model.Model}";
+}
+
+<h1 class="display-2 text-center">Edit Your Car</h1>
+
+<form asp-action="Edit" method="post" class="row gx-4">
+<div class="col-md-6">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Make" class="form-label"></label>
+        <input asp-for="Make" class="form-control" />
+        <span asp-validation-for="Make" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Model" class="form-label"></label>
+        <input asp-for="Model" class="form-control" />
+        <span asp-validation-for="Model" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Trim" class="form-label"></label>
+        <input asp-for="Trim" class="form-control" />
+        <span asp-validation-for="Trim" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Year" class="form-label"></label>
+        <input asp-for="Year" class="form-control" />
+        <span asp-validation-for="Year" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Color" class="form-label"></label>
+        <input asp-for="Color" class="form-control" />
+        <span asp-validation-for="Color" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Horsepower" class="form-label"></label>
+        <input asp-for="Horsepower" class="form-control" />
+        <span asp-validation-for="Horsepower" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsElectric" class="form-check-input" />
+        <label asp-for="IsElectric" class="form-check-label"></label>
+    </div>
+
+     <div class="form-check mb-3">
+        <input asp-for="IsHybrid" class="form-check-input" />
+        <label asp-for="IsHybrid" class="form-check-label"></label>
+    </div>
+
+    <div class="mb-3">
+    <label asp-for="Drivetrain" class="form-label"></label>
+    <div class="d-flex py-1 gap-4">
+    <div class="form-check">
+        <input asp-for="Drivetrain" id="drivetrain-awd" type="radio" value="AWD" class="form-check-input" />
+        <label class="form-check-label" for="drivetrain-awd">AWD</label>
+    </div>
+    <div class="form-check">
+        <input asp-for="Drivetrain" id="drivetrain-rwd" type="radio" value="RWD" class="form-check-input" />
+        <label class="form-check-label" for="drivetrain-rwd">RWD</label>
+    </div>
+    <div class="form-check">
+        <input asp-for="Drivetrain" id="drivetrain-fwd" type="radio" value="FWD" class="form-check-input" />
+        <label class="form-check-label" for="drivetrain-fwd">FWD</label>
+    </div>
+  </div>
+</div>
+</div>
+    <div class="col-md-6 d-flex justify-content-center align-items-center gap-2">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

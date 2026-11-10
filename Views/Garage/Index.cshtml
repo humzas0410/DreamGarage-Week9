@@ -1,0 +1,24 @@
+@model List<Car>
+@{
+    ViewData["Title"] = "The Garage";
+}
+<header>
+<div class="text-center">
+    <h2 class="display-2">The DreamGarage</h2>
+    <p><em>Welcome to The DreamGarage! The best place to find your dream cars.</em></p>
+</div>
+</header>
+
+<a href="/Garage/Create" class="btn btn-primary mb-3">Add a Car</a>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+    @foreach (var car in Model)
+    {
+        <div class="col">
+            <partial name="_CarCard" model="car" />
+        </div>
+    }
+</div>
+@section Scripts {
+    <script src="https://jgrissom.github.io/dotnet-web-dev/week-08/homework-checks.js"></script>
+}

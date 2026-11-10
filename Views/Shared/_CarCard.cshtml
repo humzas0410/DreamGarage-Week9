@@ -1,0 +1,30 @@
+@model Car
+
+<div class="card car-card h-100">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Make @Model.Model @Model.Trim</h5>
+        <p class="card-text"><strong>Horsepower:</strong> <u>@Model.Horsepower</u></p>
+        <p class="card-text"><strong>Drivetrain:</strong> @(Model.Drivetrain ?? "Not specified")</p>
+        <p class="card-text fst-italic">Electric: @if (Model.IsElectric)
+        {
+            <span class="badge bg-primary">Yes</span>
+        }
+        else
+        {
+            <span class="badge bg-warning">No</span>
+        }
+        </p>
+        <p class="card-text fst-italic">Hybrid: @if (Model.IsHybrid)
+        {
+            <span class="badge bg-primary">Yes</span>
+        }
+        else
+        {
+            <span class="badge bg-warning">No</span>
+        }
+        </p>
+    </div>
+    <div class="card-footer text-center">
+        <a href="/Garage/Details/@Model.Id" class="btn btn-info">View Details</a>
+    </div>
+</div>
