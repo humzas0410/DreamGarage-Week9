@@ -26,4 +26,6 @@ public class Car
     public bool IsHybrid { get; set; }
     [Display(Name = "Drivetrain:")]
     public string? Drivetrain { get; set; }
+
+    public ICollection<CarReview> Reviews { get; set; } = new List<CarReview>();
 }
