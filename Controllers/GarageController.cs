@@ -2,6 +2,8 @@ using DreamGarage.Models;
 using Microsoft.AspNetCore.Mvc;
 using DreamGarage.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using DreamGarage.ViewModels;
 
 namespace DreamGarage.Controllers;
 
@@ -23,13 +25,76 @@ public class GarageController : Controller
     }
     public IActionResult Details(int id)
     {
-        var car = _context.Cars.FirstOrDefault(c => c.Id == id);
+        var car = _context.Cars
+            .Include(c => c.Reviews)
+            .FirstOrDefault(c => c.Id == id);
         if (car == null)
         {
             return NotFound();
         }
         return View(car);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> AddReview(int? id)
+    {
+        if (id.HasValue && !await _context.Cars.AnyAsync(car => car.Id == id.Value))
+        {
+            return NotFound();
+        }
+
+        var viewModel = new CarReviewFormViewModel
+        {
+            CarId = id,
+            Cars = await GetCarsSelectListAsync(id)
+        };
+
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddReview(CarReviewFormViewModel viewModel)
+    {
+        var car = viewModel.CarId.HasValue
+            ? await _context.Cars.FindAsync(viewModel.CarId.Value)
+            : null;
+
+        if (viewModel.CarId.HasValue && car == null)
+        {
+            ModelState.AddModelError(nameof(viewModel.CarId), "Please select an existing car.");
+        }
+
+        if (!ModelState.IsValid || car == null)
+        {
+            viewModel.Cars = await GetCarsSelectListAsync(viewModel.CarId);
+            return View(viewModel);
+        }
+
+        var review = new CarReview
+        {
+            ReviewerName = viewModel.Review.ReviewerName,
+            Rating = viewModel.Review.Rating,
+            Comment = viewModel.Review.Comment,
+            CarId = car.Id
+        };
+        _context.CarReviews.Add(review);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Details), new { id = car.Id });
+    }
+
+    private async Task<SelectList> GetCarsSelectListAsync(int? selectedCarId)
+    {
+        var cars = await _context.Cars
+            .OrderBy(car => car.Make)
+            .ThenBy(car => car.Model)
+            .Select(car => new { car.Id, Name = car.Make + " " + car.Model })
+            .ToListAsync();
+
+        return new SelectList(cars, "Id", "Name", selectedCarId);
+    }
+
     public IActionResult Create()
     {
         return View();

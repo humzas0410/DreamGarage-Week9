@@ -1,0 +1,41 @@
+@model DreamGarage.ViewModels.CarReviewFormViewModel
+@{
+    ViewData["Title"] = "Add a Review";
+}
+
+<h1 class="display-4 text-center">Add a Review</h1>
+<form asp-action="AddReview" method="post" class="mx-auto" style="max-width: 600px;">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="CarId" class="form-label"></label>
+        <select asp-for="CarId" asp-items="Model.Cars" class="form-select">
+        </select>
+        <span asp-validation-for="CarId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Review.ReviewerName" class="form-label"></label>
+        <input asp-for="Review.ReviewerName" class="form-control" />
+        <span asp-validation-for="Review.ReviewerName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Review.Rating" class="form-label"></label>
+        <input asp-for="Review.Rating" type="number" min="1" max="5" class="form-control" />
+        <span asp-validation-for="Review.Rating" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Review.Comment" class="form-label"></label>
+        <textarea asp-for="Review.Comment" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Review.Comment" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Review</button>
+    <a asp-action="Index" class="btn btn-link">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

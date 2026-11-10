@@ -10,6 +10,8 @@ public class CarContext : DbContext
     }
 
     public DbSet<Car> Cars => Set<Car>();
+    public DbSet<CarReview> CarReviews => Set<CarReview>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Car>().HasData(

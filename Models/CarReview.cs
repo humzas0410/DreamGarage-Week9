@@ -6,6 +6,7 @@ public class CarReview
 {
     public int Id { get; set; }
 
+    [Display(Name = "Reviewer Name")]
     [Required]
     [StringLength(50)]
     public string ReviewerName { get; set; } = "";

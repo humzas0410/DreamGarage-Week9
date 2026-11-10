@@ -53,6 +53,31 @@
         </tr>
     </tbody>
 </table>
+<h2 class="h4 mt-4">Reviews</h2>
+@if (Model.Reviews.Any())
+{
+    <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
+    @foreach (var review in Model.Reviews)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@review.Rating / 5</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@review.ReviewerName</h6>
+                    <p class="card-text">@review.Comment</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+}
+else
+{
+    <p>No reviews yet.</p>
+}
+<div class="text-center mb-3">
+    <a asp-action="AddReview" asp-route-id="@Model.Id" class="btn btn-success">Add a Review</a>
+</div>
 <div class="row mb-3">
     <div class="col-6 text-center">
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
